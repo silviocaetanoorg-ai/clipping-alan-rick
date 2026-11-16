@@ -104,7 +104,9 @@ function BaixarTudo($fontes) {
     $handler.AutomaticDecompression = [System.Net.DecompressionMethods]::GZip -bor [System.Net.DecompressionMethods]::Deflate
     $cli = New-Object System.Net.Http.HttpClient($handler)
     $cli.Timeout = [TimeSpan]::FromSeconds(25)
-    $cli.DefaultRequestHeaders.UserAgent.ParseAdd('Mozilla/5.0 (Windows NT 10.0; Win64; x64) ClippingBot/1.0')
+    $cli.DefaultRequestHeaders.UserAgent.ParseAdd('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
+    $cli.DefaultRequestHeaders.Accept.ParseAdd('application/rss+xml, application/xml;q=0.9, */*;q=0.8')
+    $cli.DefaultRequestHeaders.AcceptLanguage.ParseAdd('pt-BR,pt;q=0.9')
     $tarefas = @(foreach ($f in $fontes) { $cli.GetByteArrayAsync($f.url) })
     try { [Threading.Tasks.Task]::WaitAll([Threading.Tasks.Task[]]$tarefas) } catch {}
     $res = @()
