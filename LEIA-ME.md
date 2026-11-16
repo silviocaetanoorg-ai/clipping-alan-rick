@@ -1,8 +1,16 @@
 # Clipping — Senador Alan Rick
 
-Ferramenta local que coleta e organiza automaticamente as notícias sobre o Senador Alan Rick (Acre).
+Ferramenta que coleta e organiza automaticamente as notícias sobre o Senador Alan Rick (Acre).
 
-## Como usar
+## Site online
+**https://silviocaetanoorg-ai.github.io/clipping-alan-rick/**
+
+O GitHub Actions (`.github/workflows/clipping.yml`) coleta as notícias a cada ~30 minutos, salva em `public/noticias.json`
+e republica o site. Para coletar na hora: no repositório, abra **Actions → Coletar notícias e publicar → Run workflow**.
+Para mudar fontes ou temas, edite `config.json` no GitHub; o site é atualizado sozinho.
+Obs.: o ContilNet bloqueia acessos vindos do GitHub, mas as matérias dele costumam chegar pelo Google Notícias.
+
+## Versão local (opcional)
 1. Dê dois cliques em **iniciar.bat**. O navegador abre em http://localhost:8080/
 2. Deixe a janela preta aberta enquanto usar o clipping. Para fechar, feche a janela ou aperte Ctrl+C.
 

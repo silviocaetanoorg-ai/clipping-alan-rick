@@ -25,6 +25,9 @@ function Tratar($ctx) {
         return Responder $ctx 200 'application/json; charset=utf-8' "{`"novas`":$novas}"
     }
 
+    if ($caminho -eq '/noticias.json') {
+        return Responder $ctx 200 'application/json; charset=utf-8' ([IO.File]::ReadAllBytes($ArqArquivo))
+    }
     if ($caminho -eq '/') { $caminho = '/index.html' }
     $rel = [Uri]::UnescapeDataString($caminho.TrimStart('/')) -replace '/', '\'
     $arq = [IO.Path]::GetFullPath((Join-Path $PastaWeb $rel))
@@ -36,6 +39,12 @@ function Tratar($ctx) {
     Responder $ctx 404 'text/plain; charset=utf-8' 'Não encontrado'
 }
 
+# A versão local guarda sua base em data/ para não alterar public/noticias.json, que é mantido pelo GitHub Actions.
+$PastaDados = Join-Path $Raiz 'data'
+if (-not (Test-Path $PastaDados)) { New-Item -ItemType Directory $PastaDados | Out-Null }
+$ArqLocal = Join-Path $PastaDados 'noticias.json'
+if (-not (Test-Path $ArqLocal) -and (Test-Path $ArqArquivo)) { Copy-Item $ArqArquivo $ArqLocal }
+$ArqArquivo = $ArqLocal
 CarregarArquivo
 
 $porta = if ($env:CLIPPING_PORTA) { [int]$env:CLIPPING_PORTA } else { [int]$Config.porta }
