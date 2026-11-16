@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clipping Alan Rick</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23154a8a'/><path d='M8 9h16v3H8zm0 6h16v2H8zm0 5h11v2H8z' fill='white'/></svg>">
+<style>
+:root{
+  --bg:#f4f5f7; --surface:#fff; --surface-2:#f0f2f5; --text:#16202c; --muted:#5d6b7a; --line:#e1e5ea;
+  --accent:#154a8a; --accent-soft:#e6eef8; --gold:#c08a00; --new:#0f8a5f; --danger:#b42318;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f141a; --surface:#171e26; --surface-2:#1f2832; --text:#e6ebf0; --muted:#94a3b3; --line:#2a3541;
+    --accent:#7fb0ef; --accent-soft:#1d2e45; --gold:#e5b53d; --new:#4cc796; --danger:#f2867c; --shadow:none}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+header{background:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){header{background:#10233b}}
+header .wrap{display:flex;align-items:center;gap:16px;padding-top:18px;padding-bottom:18px;flex-wrap:wrap}
+header h1{margin:0;font-size:22px;letter-spacing:-.01em}
+header .sub{opacity:.8;font-size:13px}
+header .acoes{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+header .btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff}
+header .btn:hover{background:rgba(255,255,255,.22)}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.kpi b{display:block;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:13px}
+
+.grid{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start}
+aside{position:sticky;top:12px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+label.campo{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input[type=search],input[type=date],select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+.datas{display:flex;gap:6px;margin-top:6px}
+.datas[hidden]{display:none}
+.chk{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:3px 10px;font-size:12.5px;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){.chip.on{color:#0f141a}}
+.chip small{opacity:.7;margin-left:3px}
+
+.grafico{display:flex;align-items:flex-end;gap:2px;height:70px}
+.grafico div{flex:1;background:var(--accent);opacity:.75;border-radius:2px 2px 0 0;min-height:2px}
+.grafico div:hover{opacity:1}
+.eixo{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+.ranking{list-style:none;margin:0;padding:0;font-size:13.5px}
+.ranking li{display:flex;justify-content:space-between;gap:8px;padding:3px 0;cursor:pointer}
+.ranking li:hover{color:var(--accent)}
+.ranking li span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
+
+.barra{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.barra .info{color:var(--muted);font-size:14px;margin-right:auto}
+.dia{margin:22px 0 8px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:flex;align-items:center;gap:10px}
+.dia::after{content:"";flex:1;height:1px;background:var(--line)}
+.dia:first-child{margin-top:4px}
+.noticia{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;gap:12px}
+.noticia.oculta{opacity:.5}
+.noticia .corpo{flex:1;min-width:0}
+.meta{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.meta .veiculo{font-weight:600;color:var(--accent)}
+.selo{font-size:11px;font-weight:700;border-radius:4px;padding:1px 6px;text-transform:uppercase;letter-spacing:.03em}
+.selo.novo{background:var(--new);color:#fff}
+.selo.cit{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.noticia h2{font-size:16.5px;line-height:1.35;margin:4px 0 4px}
+.noticia h2 a{text-decoration:none}
+.noticia h2 a:hover{color:var(--accent);text-decoration:underline}
+.noticia p{margin:0 0 6px;color:var(--muted);font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11.5px;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 7px}
+.botoes{display:flex;flex-direction:column;gap:4px}
+.ico{border:0;background:transparent;cursor:pointer;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}
+.ico:hover{background:var(--surface-2);color:var(--text)}
+.ico.fav{color:var(--gold)}
+.ico svg{width:18px;height:18px}
+.vazio{text-align:center;color:var(--muted);padding:50px 10px}
+.mais{display:block;margin:14px auto 30px}
+.mais[hidden]{display:none}
+.fontes{font-size:12.5px}
+.fontes summary{cursor:pointer;color:var(--muted)}
+.fontes li{display:flex;justify-content:space-between;gap:6px;padding:2px 0}
+.fontes ul{list-style:none;padding:0;margin:8px 0 0}
+.ok{color:var(--new)} .erro{color:var(--danger)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:10}
+.toast.on{opacity:1}
+.carregando{color:var(--muted);padding:40px;text-align:center}
+
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr}
+  aside{position:static}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  header .acoes{margin-left:0;width:100%}
+}
+@media print{
+  header .acoes,aside,.barra .btn,.botoes,.mais{display:none!important}
+  .grid{grid-template-columns:1fr} body{background:#fff} .noticia{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <h1 id="titulo">Clipping — Senador Alan Rick</h1>
+      <div class="sub" id="status">Carregando…</div>
+    </div>
+    <div class="acoes">
+      <button class="btn" id="bCopiar" title="Copia as notícias filtradas em texto, pronto para WhatsApp/e-mail">📋 Copiar clipping</button>
+      <button class="btn" id="bCsv">⬇ Exportar CSV</button>
+      <button class="btn" id="bImprimir">🖨 Imprimir / PDF</button>
+      <button class="btn" id="bAtualizar">⟳ Atualizar agora</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="kpis">
+    <div class="kpi"><b id="kHoje">–</b><span>notícias hoje</span></div>
+    <div class="kpi"><b id="k7">–</b><span>últimos 7 dias</span></div>
+    <div class="kpi"><b id="k30">–</b><span>últimos 30 dias</span></div>
+    <div class="kpi"><b id="kVeic">–</b><span>veículos (30 dias)</span></div>
+  </section>
+
+  <div class="grid">
+    <aside>
+      <div class="card">
+        <h3>Filtros</h3>
+        <input type="search" id="fBusca" placeholder="Buscar no título ou resumo…">
+        <label class="campo" for="fPeriodo">Período</label>
+        <select id="fPeriodo">
+          <option value="1">Hoje</option>
+          <option value="2">Últimas 48 horas</option>
+          <option value="7" selected>Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+          <option value="0">Tudo</option>
+          <option value="custom">Intervalo personalizado</option>
+        </select>
+        <div class="datas" id="fDatas" hidden>
+          <input type="date" id="fDe" aria-label="De">
+          <input type="date" id="fAte" aria-label="Até">
+        </div>
+        <label class="campo" for="fVeiculo">Veículo</label>
+        <select id="fVeiculo"><option value="">Todos os veículos</option></select>
+        <label class="chk"><input type="checkbox" id="fTitulo"> Só com “Alan Rick” no título</label>
+        <label class="chk"><input type="checkbox" id="fFav"> Só favoritas ★</label>
+        <label class="chk"><input type="checkbox" id="fOcultas"> Mostrar ocultadas</label>
+        <label class="campo">Temas</label>
+        <div class="chips" id="fTemas"></div>
+      </div>
+
+      <div class="card">
+        <h3>Notícias por dia (30 dias)</h3>
+        <div class="grafico" id="grafico"></div>
+        <div class="eixo"><span id="eixoIni"></span><span>hoje</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Principais veículos (período)</h3>
+        <ul class="ranking" id="ranking"></ul>
+      </div>
+
+      <div class="card fontes">
+        <details>
+          <summary>Fontes monitoradas</summary>
+          <ul id="listaFontes"></ul>
+        </details>
+      </div>
+    </aside>
+
+    <section>
+      <div class="barra">
+        <span class="info" id="contagem"></span>
+        <select id="fOrdem" style="width:auto">
+          <option value="recentes">Mais recentes</option>
+          <option value="antigas">Mais antigas</option>
+          <option value="veiculo">Por veículo</option>
+        </select>
+        <button class="btn" id="bLidas" title="Remove o selo NOVO de todas">Marcar tudo como visto</button>
+      </div>
+      <div id="lista"><div class="carregando">Buscando notícias… a primeira coleta pode levar alguns segundos.</div></div>
+      <button class="btn mais" id="bMais" hidden>Mostrar mais</button>
+    </section>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const POR_PAGINA = 60;
+let dados = { itens: [], temas: [], fontes: [] };
+let temasAtivos = new Set();
+let limite = POR_PAGINA;
+let ultimaVisita = lerLS('ultimaVisita') || new Date(0).toISOString();
+
+function lerLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function gravarLS(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+
+const ICO = {
+  estrela: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg>',
+  estrelaCheia: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg>',
+  olho: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.1A9.7 9.7 0 0 1 12 5c6 0 9.5 7 9.5 7a17 17 0 0 1-3 3.9M6.6 6.6C3.9 8.4 2.5 12 2.5 12s3.5 7 9.5 7a9.4 9.4 0 0 0 5.4-1.6"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>'
+};
+
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove('on'),2200); }
+function esc(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function norm(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function diaChave(d){ const x=new Date(d); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }
+function inicioDoDia(d=new Date()){ const x=new Date(d); x.setHours(0,0,0,0); return x; }
+const fmtDia = new Intl.DateTimeFormat('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+const fmtHora = new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const fmtCurto = new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'2-digit'});
+const fmtCompleto = new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+async function carregar(forcar=false){
+  const b=$('#bAtualizar'); b.disabled=true; b.textContent='⟳ Atualizando…';
+  try{
+    // No servidor local, força uma nova coleta; online (GitHub Pages) a coleta é automática e só recarregamos.
+    if(forcar){ try{ await fetch('api/atualizar',{method:'POST'}); }catch(e){} }
+    const r = await fetch('noticias.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const novo = await r.json();
+    const antes = dados.itens.length;
+    dados = novo;
+    const m = lerMarcas();
+    dados.itens = (dados.itens||[]).map(i=>({...i, temas: [].concat(i.temas||[]), origens:[].concat(i.origens||[]), favorito: m.fav.includes(i.id), oculto: m.oc.includes(i.id)}));
+    montarFiltrosEstaticos();
+    render();
+    if(forcar) toast(dados.itens.length>antes ? `${dados.itens.length-antes} notícia(s) nova(s)` : 'Nenhuma notícia nova');
+  }catch(e){
+    $('#status').textContent='Erro ao carregar as notícias: '+e.message;
+    if(!dados.itens.length) $('#lista').innerHTML='<div class="vazio">Não foi possível carregar as notícias. Tente recarregar a página.</div>';
+  }finally{ b.disabled=false; b.textContent='⟳ Atualizar agora'; }
+}
+
+function montarFiltrosEstaticos(){
+  if(dados.titulo){ $('#titulo').textContent=dados.titulo; }
+  $('#status').textContent = dados.atualizadoEm ? `Atualizado em ${fmtCompleto.format(new Date(dados.atualizadoEm))} · ${dados.itens.length} notícias no arquivo · atualização automática a cada ${dados.intervaloMin} min` : '';
+  const ul=$('#listaFontes');
+  ul.innerHTML = (dados.fontes||[]).map(f=>`<li title="${esc(f.erro||'')}"><span>${esc(f.fonte)}</span><span class="${f.ok?'ok':'erro'}">${f.ok? f.itens : 'falhou'}</span></li>`).join('');
+}
+
+function itensBase(){
+  const busca = norm($('#fBusca').value.trim());
+  const p = $('#fPeriodo').value;
+  let de=null, ate=null;
+  if(p==='custom'){
+    if($('#fDe').value) de=new Date($('#fDe').value+'T00:00:00');
+    if($('#fAte').value) ate=new Date($('#fAte').value+'T23:59:59');
+  } else if(p!=='0'){
+    const n=+p; de = n===1 ? inicioDoDia() : n===2 ? new Date(Date.now()-48*3600e3) : inicioDoDia(new Date(Date.now()-(n-1)*864e5));
+  }
+  const soTitulo=$('#fTitulo').checked, soFav=$('#fFav').checked, verOcultas=$('#fOcultas').checked;
+  return dados.itens.filter(i=>{
+    const d=new Date(i.data);
+    if(de && d<de) return false;
+    if(ate && d>ate) return false;
+    if(i.oculto && !verOcultas) return false;
+    if(soTitulo && !i.destaque) return false;
+    if(soFav && !i.favorito) return false;
+    if(busca && !norm(i.titulo+' '+i.resumo+' '+i.veiculo).includes(busca)) return false;
+    if(temasAtivos.size && !i.temas.some(t=>temasAtivos.has(t))) return false;
+    return true;
+  });
+}
+
+function filtrados(){
+  const v=$('#fVeiculo').value;
+  let r = itensBase().filter(i=>!v || i.veiculo===v);
+  const o=$('#fOrdem').value;
+  if(o==='antigas') r.sort((a,b)=>a.data.localeCompare(b.data));
+  else if(o==='veiculo') r.sort((a,b)=>a.veiculo.localeCompare(b.veiculo,'pt')||b.data.localeCompare(a.data));
+  else r.sort((a,b)=>b.data.localeCompare(a.data));
+  return r;
+}
+
+function render(){
+  const visiveis = dados.itens.filter(i=>!i.oculto);
+  const hoje=inicioDoDia(), d7=inicioDoDia(new Date(Date.now()-6*864e5)), d30=inicioDoDia(new Date(Date.now()-29*864e5));
+  const em = (d0)=>visiveis.filter(i=>new Date(i.data)>=d0);
+  $('#kHoje').textContent=em(hoje).length;
+  $('#k7').textContent=em(d7).length;
+  $('#k30').textContent=em(d30).length;
+  $('#kVeic').textContent=new Set(em(d30).map(i=>i.veiculo)).size;
+
+  // gráfico 30 dias
+  const cont={}; em(d30).forEach(i=>{const k=diaChave(i.data); cont[k]=(cont[k]||0)+1;});
+  const dias=[...Array(30)].map((_,n)=>{const d=new Date(d30.getTime()+n*864e5); return {d, k:diaChave(d)};});
+  const max=Math.max(1,...dias.map(x=>cont[x.k]||0));
+  $('#grafico').innerHTML=dias.map(x=>`<div style="height:${((cont[x.k]||0)/max*100).toFixed(1)}%" title="${fmtCurto.format(x.d)}: ${cont[x.k]||0} notícia(s)"></div>`).join('');
+  $('#eixoIni').textContent=fmtCurto.format(d30);
+
+  // veículos e temas (com base nos filtros, exceto o próprio veículo)
+  const base=itensBase();
+  const porVeic={}; base.forEach(i=>porVeic[i.veiculo]=(porVeic[i.veiculo]||0)+1);
+  const ordVeic=Object.entries(porVeic).sort((a,b)=>b[1]-a[1]);
+  $('#ranking').innerHTML = ordVeic.slice(0,10).map(([v,n])=>`<li data-v="${esc(v)}"><span>${esc(v)}</span><span>${n}</span></li>`).join('') || '<li><span>—</span></li>';
+  const sel=$('#fVeiculo'), atual=sel.value;
+  const todos=[...new Set(dados.itens.map(i=>i.veiculo))].sort((a,b)=>a.localeCompare(b,'pt'));
+  sel.innerHTML='<option value="">Todos os veículos</option>'+todos.map(v=>`<option ${v===atual?'selected':''}>${esc(v)}</option>`).join('');
+
+  const porTema={}; base.forEach(i=>i.temas.forEach(t=>porTema[t]=(porTema[t]||0)+1));
+  $('#fTemas').innerHTML=(dados.temas||[]).map(t=>`<button class="chip ${temasAtivos.has(t)?'on':''}" data-t="${esc(t)}">${esc(t)}<small>${porTema[t]||0}</small></button>`).join('');
+
+  renderLista();
+}
+
+function renderLista(){
+  const r=filtrados();
+  const novos=r.filter(i=>i.capturadoEm>ultimaVisita).length;
+  $('#contagem').textContent = `${r.length} notícia(s)` + (novos?` · ${novos} nova(s) desde a última visita`:'');
+  if(!r.length){ $('#lista').innerHTML='<div class="vazio">Nenhuma notícia encontrada com esses filtros.</div>'; $('#bMais').hidden=true; return; }
+  let html='', diaAtual='';
+  const agrupar=$('#fOrdem').value!=='veiculo';
+  r.slice(0,limite).forEach(i=>{
+    const d=new Date(i.data);
+    if(agrupar){ const k=diaChave(d); if(k!==diaAtual){ diaAtual=k; html+=`<div class="dia">${fmtDia.format(d)}</div>`; } }
+    const novo=i.capturadoEm>ultimaVisita;
+    html+=`<article class="noticia ${i.oculto?'oculta':''}" data-id="${i.id}">
+      <div class="corpo">
+        <div class="meta"><span class="veiculo">${esc(i.veiculo)}</span><span>${agrupar?fmtHora.format(d):fmtCompleto.format(d)}</span>
+          ${novo?'<span class="selo novo">novo</span>':''}${i.destaque?'':'<span class="selo cit" title="O nome aparece no texto, não no título">citação</span>'}</div>
+        <h2><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.titulo)}</a></h2>
+        ${i.resumo?`<p>${esc(i.resumo)}</p>`:''}
+        <div class="tags">${i.temas.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+      </div>
+      <div class="botoes">
+        <button class="ico ${i.favorito?'fav':''}" data-acao="fav" title="${i.favorito?'Remover dos favoritos':'Favoritar'}">${i.favorito?ICO.estrelaCheia:ICO.estrela}</button>
+        <button class="ico" data-acao="copiar" title="Copiar título e link">${ICO.link}</button>
+        <button class="ico" data-acao="ocultar" title="${i.oculto?'Reexibir':'Ocultar (não é sobre o senador / irrelevante)'}">${ICO.olho}</button>
+      </div>
+    </article>`;
+  });
+  $('#lista').innerHTML=html;
+  $('#bMais').hidden = r.length<=limite;
+}
+
+// Favoritas e ocultadas ficam salvas neste navegador.
+function lerMarcas(){ try{ const m=JSON.parse(lerLS('marcas')||'{}'); return {fav:m.fav||[], oc:m.oc||[]}; }catch(e){ return {fav:[],oc:[]}; } }
+function marcar(id, campos){
+  const i=dados.itens.find(x=>x.id===id); if(!i) return;
+  Object.assign(i,campos);
+  gravarLS('marcas', JSON.stringify({fav:dados.itens.filter(x=>x.favorito).map(x=>x.id), oc:dados.itens.filter(x=>x.oculto).map(x=>x.id)}));
+  render();
+}
+
+async function copiar(texto, msg){
+  try{ await navigator.clipboard.writeText(texto); }
+  catch(e){ const t=document.createElement('textarea'); t.value=texto; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  toast(msg);
+}
+
+function textoClipping(){
+  const r=filtrados(); if(!r.length) return '';
+  let out=`*${dados.titulo||'Clipping'}*\n${new Intl.DateTimeFormat('pt-BR',{dateStyle:'full'}).format(new Date())}\n${r.length} notícia(s)\n`;
+  let dia='';
+  r.forEach(i=>{
+    const d=new Date(i.data), k=diaChave(d);
+    if(k!==dia){ dia=k; out+=`\n📅 *${fmtDia.format(d)}*\n`; }
+    out+=`\n▪️ *${i.veiculo}* — ${i.titulo}\n${i.link}\n`;
+  });
+  return out;
+}
+
+function csv(){
+  const r=filtrados();
+  const c=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const linhas=[['Data','Hora','Veículo','Título','Resumo','Temas','Menção no título','Link'].map(c).join(';')];
+  r.forEach(i=>{ const d=new Date(i.data); linhas.push([d.toLocaleDateString('pt-BR'),fmtHora.format(d),i.veiculo,i.titulo,i.resumo,i.temas.join(', '),i.destaque?'sim':'não',i.link].map(c).join(';')); });
+  const blob=new Blob(['﻿'+linhas.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`clipping-alan-rick-${diaChave(new Date())}.csv`; a.click(); URL.revokeObjectURL(a.href);
+}
+
+// eventos
+['#fBusca','#fPeriodo','#fDe','#fAte','#fTitulo','#fFav','#fOcultas'].forEach(s=>$(s).addEventListener('input',()=>{ limite=POR_PAGINA; if(s==='#fPeriodo') $('#fDatas').hidden=$('#fPeriodo').value!=='custom'; render(); }));
+$('#fVeiculo').addEventListener('input',()=>{limite=POR_PAGINA; renderLista();});
+$('#fOrdem').addEventListener('input',()=>{limite=POR_PAGINA; renderLista();});
+$('#fTemas').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b) return; const t=b.dataset.t; temasAtivos.has(t)?temasAtivos.delete(t):temasAtivos.add(t); limite=POR_PAGINA; render(); });
+$('#ranking').addEventListener('click',e=>{ const li=e.target.closest('li[data-v]'); if(!li) return; const s=$('#fVeiculo'); s.value = s.value===li.dataset.v ? '' : li.dataset.v; limite=POR_PAGINA; renderLista(); });
+$('#lista').addEventListener('click',e=>{
+  const b=e.target.closest('[data-acao]'); if(!b) return;
+  const id=b.closest('.noticia').dataset.id, i=dados.itens.find(x=>x.id===id);
+  if(b.dataset.acao==='fav') marcar(id,{favorito:!i.favorito});
+  if(b.dataset.acao==='ocultar') marcar(id,{oculto:!i.oculto});
+  if(b.dataset.acao==='copiar') copiar(`${i.titulo} (${i.veiculo})\n${i.link}`,'Link copiado');
+});
+$('#bMais').addEventListener('click',()=>{ limite+=POR_PAGINA; renderLista(); });
+$('#bAtualizar').addEventListener('click',()=>carregar(true));
+$('#bCopiar').addEventListener('click',()=>{ const t=textoClipping(); t?copiar(t,`Clipping copiado (${filtrados().length} notícias)`):toast('Nada para copiar'); });
+$('#bCsv').addEventListener('click',csv);
+$('#bImprimir').addEventListener('click',()=>window.print());
+$('#bLidas').addEventListener('click',()=>{ ultimaVisita=new Date().toISOString(); gravarLS('ultimaVisita',ultimaVisita); renderLista(); });
+window.addEventListener('beforeunload',()=>gravarLS('ultimaVisita',new Date().toISOString()));
+
+carregar();
+setInterval(()=>carregar(false), 5*60*1000);
+</script>
+</body>
+</html>

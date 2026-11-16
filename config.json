@@ -1,0 +1,35 @@
+{
+  "titulo": "Clipping — Senador Alan Rick",
+  "porta": 8080,
+  "atualizarACadaMinutos": 30,
+  "termosObrigatorios": ["alan rick"],
+  "buscas": [
+    { "nome": "Google Notícias", "tipo": "google", "consulta": "\"Alan Rick\"" },
+    { "nome": "Google Notícias", "tipo": "google", "consulta": "\"Alan Rick\" when:2d" },
+    { "nome": "Google Notícias", "tipo": "google", "consulta": "\"Senador Alan Rick\"" },
+    { "nome": "Google Notícias", "tipo": "google", "consulta": "\"Alan Rick\" Acre" },
+    { "nome": "Bing Notícias", "tipo": "bing", "consulta": "\"Alan Rick\"" },
+    { "nome": "Bing Notícias", "tipo": "bing", "consulta": "\"Senador Alan Rick\"" }
+  ],
+  "portais": [
+    { "nome": "ac24horas", "feed": "https://ac24horas.com/?s=Alan+Rick&feed=rss2" },
+    { "nome": "ContilNet", "feed": "https://contilnet.com.br/?s=Alan+Rick&feed=rss2" },
+    { "nome": "A Gazeta do Acre", "feed": "https://agazetadoacre.com/?s=Alan+Rick&feed=rss2" },
+    { "nome": "O Alto Acre", "feed": "https://www.oaltoacre.com/?s=Alan+Rick&feed=rss2" },
+    { "nome": "AcreNews", "feed": "https://acrenews.com.br/?s=Alan+Rick&feed=rss2" },
+    { "nome": "Jornal Opinião", "feed": "https://jornalopiniao.net/?s=Alan+Rick&feed=rss2" },
+    { "nome": "Agência Acre", "feed": "https://agencia.ac.gov.br/?s=Alan+Rick&feed=rss2" },
+    { "nome": "Agência Senado", "feed": "https://www12.senado.leg.br/noticias/rss" }
+  ],
+  "temas": {
+    "Pacote fiscal / Tributos": ["pacote fiscal", "tribut", "imposto", "crédito", "reforma"],
+    "Eleições / Governo do Acre": ["eleiç", "eleito", "governador", "governo do acre", "candidat", "mailza", "posse", "transição", "urna", "votos"],
+    "Saúde": ["saúde", "hospital", "sus", "médic", "vacina"],
+    "Educação": ["educação", "escola", "universidade", "ufac", "ensino"],
+    "Infraestrutura": ["br-364", "br-317", "rodovia", "ponte", "obra", "asfalto", "ferrovia", "aeroporto"],
+    "Agro / Economia": ["agro", "produtor", "pecuár", "agricult", "emprego", "empreendedor", "economia", "indústria"],
+    "Emendas / Recursos": ["emenda", "recurso", "milhões", "investimento", "orçamento"],
+    "Segurança": ["segurança", "polícia", "violência", "crime", "facção"],
+    "Senado / Legislativo": ["senado", "pec", "projeto de lei", "plenário", "comissão", "relator", "votação", "aprovado"]
+  }
+}
